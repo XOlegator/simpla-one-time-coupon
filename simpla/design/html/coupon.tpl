@@ -88,7 +88,7 @@ $(function() {
 					<input type="checkbox" name="single" id="single" value="1" {if $coupon->single==1}checked{/if}> <label for="single">одноразовый</label>					
 				</li>
 				<li>
-					<label class=property for="for_first_buy"></label>
+					<label class="property" for="for_first_buy"></label>
 					<input type="checkbox" name="for_first_buy" id="for_first_buy" value="1" {if $coupon->for_first_buy==1}checked{/if}> <label for="for_first_buy">только на первый заказ</label>
 				</li>
 			</ul>

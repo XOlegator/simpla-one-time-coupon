@@ -1,5 +1,5 @@
 # Simpla CMS: расширенные многоразовые купоны
-Реализация для Simpla CMS возможности использовать многоразовый купон только один раз на клиента. Появится возможность для каждого купона установить флаг, является ли данный купон купоном только для одного применения клиентом. Т.е. один купон смогут применять сколько угодно клиентов, но каждый из клиентов не более одного раза.
+Реализация для Simpla CMS возможности использовать многоразовый купон только один раз на клиента. Появится возможность для каждого купона установить флаг, является ли данный купон купоном только для одного применения клиентом. Т.е. один купон смогут применять сколько угодно клиентов, но каждый из клиентов не более одного раза. Купон считается использованым, если заказ, в котором он применён, в любом статусе кроме "Отменён". Таким образом можно отменить клиенту заказ и тогда он вправе будет ещё раз применить этот же купон.
 
 ## Установка
 
@@ -49,9 +49,10 @@ $query = $this->db->placehold("SELECT c.id, c.code, c.value, c.type, c.expire, m
 ```php
     /**
      * Метод определяет, можно ли применять купон. Для купонов, которые только для однократного использования одним пользователем,
-     * этот метод вернёт ЛОЖЬ в случае, если у клиента есть не отменённые заазы с аким купоном
+     * этот метод вернёт ЛОЖЬ в случае, если у клиента есть не отменённые заказы с таким купоном
      * @param integer $userId Идентификатор клиента
      * @param string $coupon Купон
+     * @return boolean Флаг результата операции
      */
     public function isFirstUse($userId, $coupon)
     {
@@ -134,6 +135,8 @@ $query = $this->db->placehold("SELECT c.id, c.code, c.value, c.type, c.expire, m
 			$coupon->for_first_buy = $this->request->post('for_first_buy', 'boolean');
 ```
 
+![Новый флаг "Только для одного заказа"](https://raw.githubusercontent.com/wiki/XOlegator/simpla-one-time-coupon/coupon_for_first_buy.png)
+
 ### Отображение нового флага в форме редактирования купона
 
 В файле /simpla/design/html/coupon.tpl после строк
@@ -146,7 +149,7 @@ $query = $this->db->placehold("SELECT c.id, c.code, c.value, c.type, c.expire, m
 добавить строки
 ```php
 				<li>
-					<label class=property for="for_first_buy"></label>
+					<label class="property" for="for_first_buy"></label>
 					<input type="checkbox" name="for_first_buy" id="for_first_buy" value="1" {if $coupon->for_first_buy==1}checked{/if}> <label for="for_first_buy">только на первый заказ</label>
 				</li>
 ```
@@ -167,3 +170,8 @@ $query = $this->db->placehold("SELECT c.id, c.code, c.value, c.type, c.expire, m
 	 				</div>
 	 				{/if}
 ```
+
+## Благодарности и ссылки ##
+
+* Simpla CMS - http://simplacms.ru/
+* Разработчик интеграции - Олег Ехлаков <subspam@mail.ru>
