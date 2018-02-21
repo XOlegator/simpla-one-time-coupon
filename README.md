@@ -175,3 +175,4 @@ $query = $this->db->placehold("SELECT c.id, c.code, c.value, c.type, c.expire, m
 
 * Simpla CMS - http://simplacms.ru/
 * Разработчик интеграции - Олег Ехлаков <subspam@mail.ru>
+* Проект реализован при поддержке студии Ультравзор — http://ultravzor.com
